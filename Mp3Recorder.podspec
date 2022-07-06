@@ -18,7 +18,7 @@ end
 s.subspec 'BBVoiceRecord' do |bb|
 	bb.source_files = 'BBVoiceRecord/*.{h,m}'
 end
-s.resources = 'BBVoiceRecord/*.{png}'
+s.resources = 'BBVoiceRecord/resources/*.{png}'
 s.requires_arc = true
 
 end
