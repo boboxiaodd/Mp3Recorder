@@ -20,5 +20,5 @@ s.subspec 'BBVoiceRecord' do |bb|
 end
 s.resources = 'BBVoiceRecord/resources/*.{png}'
 s.requires_arc = true
-
+s.dependency 'Masonry'
 end
