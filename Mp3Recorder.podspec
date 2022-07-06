@@ -16,7 +16,7 @@ s.subspec 'MXMp3Recorder' do |mx|
     mx.vendored_frameworks = 'MXMp3Recorder/lame.framework'
 end
 s.subspec 'BBVoiceRecord' do |bb|
-	bb.source_files = 'BBVoiceRecord/*{h,m}'
+	bb.source_files = 'BBVoiceRecord/*.{h,m}'
 end
 s.resources = 'BBVoiceRecord/*.{png}'
 s.requires_arc = true
