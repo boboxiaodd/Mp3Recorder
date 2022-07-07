@@ -11,14 +11,16 @@ s.license      = { :type => "MIT", :file => "LICENSE" }
 s.author       = { "linhaibo" => "iam386@gmail.com" }
 s.platform     = :ios, "11.0"
 s.source       = { :git => "https://github.com/boboxiaodd/Mp3Recorder.git", :tag => s.version }
-s.subspec 'MXMp3Recorder' do |mx|
-    mx.source_files = 'MXMp3Recorder/*.{h,m}'
-    mx.vendored_frameworks = 'MXMp3Recorder/lame.framework'
-end
-s.subspec 'BBVoiceRecord' do |bb|
-	bb.source_files = 'BBVoiceRecord/*.{h,m}'
-	bb.resource = 'BBVoiceRecord/*.bundle'
-end
+# s.subspec 'MXMp3Recorder' do |mx|
+#     mx.source_files = 'MXMp3Recorder/*.{h,m}'
+#     mx.vendored_frameworks = 'MXMp3Recorder/lame.framework'
+# end
+# s.subspec 'BBVoiceRecord' do |bb|
+# 	bb.source_files = 'BBVoiceRecord/*.{h,m}'
+# end
+s.source_files = 'MXMp3Recorder/*.{h,m}','BBVoiceRecord/*.{h,m}'
+s.vendored_frameworks = 'MXMp3Recorder/lame.framework'
+s.resource = 'BBVoiceRecord/*.bundle'
 s.requires_arc = true
 s.dependency 'Masonry'
 end
