@@ -18,7 +18,7 @@ end
 s.subspec 'BBVoiceRecord' do |bb|
 	bb.source_files = 'BBVoiceRecord/*.{h,m}'
 end
-resources.resource_bundle = {'MXBundle' => ['BBVoiceRecord/resources/*.png']}
+s.resources.resource_bundle = {'MXBundle' => ['BBVoiceRecord/resources/*.png']}
 s.requires_arc = true
 s.dependency 'Masonry'
 end
