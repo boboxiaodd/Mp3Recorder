@@ -17,10 +17,10 @@ s.subspec 'MXMp3Recorder' do |mx|
 end
 s.subspec 'BBVoiceRecord' do |bb|
 	bb.source_files = 'BBVoiceRecord/*.{h,m}'
+	bb.resource_bundles = {
+    	'BBVoiceRecord' => ['BBVoiceRecord/*.bundle']
+    }
 end
-s.resource_bundles = {
-	'BBVoiceRecord' => ['BBVoiceRecord/*.bundle']
-}
 s.requires_arc = true
 s.dependency 'Masonry'
 end
