@@ -9,7 +9,7 @@
 #import "BBVoiceRecordToastContentView.h"
 #import "BBVoiceRecordPowerAnimationView.h"
 #import "UIColor+BBVoiceRecord.h"
-#import "Masonry.h"
+
 
 @implementation BBVoiceRecordToastContentView
 
@@ -73,26 +73,79 @@
     }
     
     
+//    CGSize textSize = [_lbContent sizeThatFits:CGSizeZero];
+//    [_lbContent mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.leading.equalTo(self);
+//        make.trailing.equalTo(self);
+//        make.bottom.equalTo(self).offset(-12);
+//        make.height.mas_equalTo(ceil(textSize.height));
+//    }];
+//    
+//    [_imgRecord mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.top.equalTo(self).offset(30);
+//        make.leading.equalTo(self).offset(40);
+//        make.size.mas_equalTo(CGSizeMake(_imgRecord.image.size.width, _imgRecord.image.size.height));
+//    }];
+//    
+//    CGSize powerSize = CGSizeMake(18, 56);
+//    [_powerView mas_updateConstraints:^(MASConstraintMaker *make) {
+//        make.bottom.equalTo(_imgRecord);
+//        make.leading.equalTo(_imgRecord.mas_trailing).offset(4);
+//        make.size.mas_equalTo(powerSize);
+//    }];
+    
+    // ==================== _lbContent 标签布局 ====================
+    // 计算文本高度（需确保已设置字体）
     CGSize textSize = [_lbContent sizeThatFits:CGSizeZero];
-    [_lbContent mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self);
-        make.trailing.equalTo(self);
-        make.bottom.equalTo(self).offset(-12);
-        make.height.mas_equalTo(ceil(textSize.height));
-    }];
+
+    // 关闭自动转换
+    _lbContent.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // 创建并激活约束
+    [NSLayoutConstraint activateConstraints:@[
+        // 水平约束
+        [_lbContent.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [_lbContent.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        
+        // 底部约束
+        [_lbContent.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-12],
+        
+        // 高度约束
+        [_lbContent.heightAnchor constraintEqualToConstant:ceil(textSize.height)]
+    ]];
+
+    // ==================== _imgRecord 图片布局 ====================
+    _imgRecord.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // 图片尺寸需确保已加载
+    CGSize imageSize = _imgRecord.image ? _imgRecord.image.size : CGSizeZero;
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 位置约束
+        [_imgRecord.topAnchor constraintEqualToAnchor:self.topAnchor constant:30],
+        [_imgRecord.leadingAnchor constraintEqualToAnchor:self.leadingAnchor constant:40],
+        
+        // 尺寸约束
+        [_imgRecord.widthAnchor constraintEqualToConstant:imageSize.width],
+        [_imgRecord.heightAnchor constraintEqualToConstant:imageSize.height]
+    ]];
+
+    // ==================== _powerView 布局 ====================
+    _powerView.translatesAutoresizingMaskIntoConstraints = NO;
+    CGSize powerSize = CGSizeMake(18, 56); // 固定尺寸
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 对齐图片底部
+        [_powerView.bottomAnchor constraintEqualToAnchor:_imgRecord.bottomAnchor],
+        
+        // 水平间距
+        [_powerView.leadingAnchor constraintEqualToAnchor:_imgRecord.trailingAnchor constant:4],
+        
+        // 固定尺寸
+        [_powerView.widthAnchor constraintEqualToConstant:powerSize.width],
+        [_powerView.heightAnchor constraintEqualToConstant:powerSize.height]
+    ]];
     
-    [_imgRecord mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(30);
-        make.leading.equalTo(self).offset(40);
-        make.size.mas_equalTo(CGSizeMake(_imgRecord.image.size.width, _imgRecord.image.size.height));
-    }];
-    
-    CGSize powerSize = CGSizeMake(18, 56);
-    [_powerView mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(_imgRecord);
-        make.leading.equalTo(_imgRecord.mas_trailing).offset(4);
-        make.size.mas_equalTo(powerSize);
-    }];
     //默认显示一格音量
     _powerView.originSize = powerSize;
     [_powerView updateWithPower:0];
@@ -153,18 +206,38 @@
         [self addSubview:_imgRelease];
     }
     
-    [_imgRelease mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(30);
-        make.centerX.equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(_imgRelease.image.size.width, _imgRelease.image.size.height));
-    }];
-    
-    [_lbContent mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self).offset(0);
-        make.trailing.equalTo(self).offset(0);
-        make.bottom.equalTo(self).offset(-7);
-        make.height.mas_equalTo(25);
-    }];
+    // ================ _imgRelease 图片布局 ================
+    _imgRelease.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // 确保图片已加载
+    CGSize imageSize = _imgRelease.image ? _imgRelease.image.size : CGSizeZero;
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 顶部间距 30
+        [_imgRelease.topAnchor constraintEqualToAnchor:self.topAnchor constant:30],
+        
+        // 水平居中
+        [_imgRelease.centerXAnchor constraintEqualToAnchor:self.centerXAnchor],
+        
+        // 尺寸约束（需处理空图情况）
+        [_imgRelease.widthAnchor constraintEqualToConstant:MAX(imageSize.width, 1)],  // 防止0宽度
+        [_imgRelease.heightAnchor constraintEqualToConstant:MAX(imageSize.height, 1)] // 防止0高度
+    ]];
+
+    // ================ _lbContent 标签布局 ================
+    _lbContent.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 左右贴边（offset(0) 等价于无间距）
+        [_lbContent.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [_lbContent.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        
+        // 底部间距 7
+        [_lbContent.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-7],
+        
+        // 固定高度 25
+        [_lbContent.heightAnchor constraintEqualToConstant:25]
+    ]];
     
 }
 
@@ -219,23 +292,41 @@
         [self addSubview:_lbRemainTime];
     }
     
-    [_lbContent mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.leading.equalTo(self).offset(0);
-        make.trailing.equalTo(self).offset(0);
-        make.bottom.equalTo(self).offset(-7);
-        make.height.mas_equalTo(25);
-    }];
+    // ================ _lbContent 标签布局 ================
+    _lbContent.translatesAutoresizingMaskIntoConstraints = NO;
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 水平贴边（左右无间距）
+        [_lbContent.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [_lbContent.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        
+        // 底部间距 7 点
+        [_lbContent.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-7],
+        
+        // 固定高度 25 点
+        [_lbContent.heightAnchor constraintEqualToConstant:25]
+    ]];
 }
 
 - (void)updateWithRemainTime:(float)remainTime
 {
     _lbRemainTime.text = [NSString stringWithFormat:@"%d",(int)remainTime];
     CGSize textSize = [_lbRemainTime sizeThatFits:CGSizeZero];
-    [_lbRemainTime mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(16);
-        make.centerX.equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(ceil(textSize.width), 95));
-    }];
+    
+    _lbRemainTime.translatesAutoresizingMaskIntoConstraints = NO;
+
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 顶部间距 16 点
+        [_lbRemainTime.topAnchor constraintEqualToAnchor:self.topAnchor constant:16],
+        
+        // 水平居中
+        [_lbRemainTime.centerXAnchor constraintEqualToAnchor:self.centerXAnchor],
+        
+        // 动态宽度 + 固定高度
+        [_lbRemainTime.widthAnchor constraintEqualToConstant:ceil(textSize.width)],  // 向上取整
+        [_lbRemainTime.heightAnchor constraintEqualToConstant:95]
+    ]];
 }
 
 @end
@@ -294,18 +385,41 @@
 {
     _lbContent.text = msg;
     
-    [_imgIcon mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.top.equalTo(self).offset(32);
-        make.centerX.equalTo(self);
-        make.size.mas_equalTo(CGSizeMake(_imgIcon.image.size.width, _imgIcon.image.size.height));
-    }];
-    CGSize textSize = [_lbContent sizeThatFits:CGSizeZero];
-    [_lbContent mas_updateConstraints:^(MASConstraintMaker *make) {
-        make.bottom.equalTo(self).offset(-12);
-        make.leading.equalTo(self);
-        make.trailing.equalTo(self);
-        make.height.mas_equalTo(ceil(textSize.height));
-    }];
+    // ================ _imgIcon 图片布局 ================
+    _imgIcon.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // 确保图片已加载，设置安全尺寸
+    CGSize iconSize = _imgIcon.image ? _imgIcon.image.size : CGSizeMake(40, 40); // 默认尺寸
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 顶部间距 32 点
+        [_imgIcon.topAnchor constraintEqualToAnchor:self.topAnchor constant:32],
+        
+        // 水平居中
+        [_imgIcon.centerXAnchor constraintEqualToAnchor:self.centerXAnchor],
+        
+        // 尺寸约束（带最小值保护）
+        [_imgIcon.widthAnchor constraintEqualToConstant:MAX(iconSize.width, 1)],
+        [_imgIcon.heightAnchor constraintEqualToConstant:MAX(iconSize.height, 1)]
+    ]];
+
+    // ================ _lbContent 标签布局 ================
+    _lbContent.translatesAutoresizingMaskIntoConstraints = NO;
+
+    // 计算动态高度（需确保已设置字体）
+    CGSize textSize = [_lbContent sizeThatFits:CGSizeMake(CGRectGetWidth(self.bounds), CGFLOAT_MAX)];
+
+    [NSLayoutConstraint activateConstraints:@[
+        // 底部间距 12 点
+        [_lbContent.bottomAnchor constraintEqualToAnchor:self.bottomAnchor constant:-12],
+        
+        // 水平贴边
+        [_lbContent.leadingAnchor constraintEqualToAnchor:self.leadingAnchor],
+        [_lbContent.trailingAnchor constraintEqualToAnchor:self.trailingAnchor],
+        
+        // 动态高度（向上取整）
+        [_lbContent.heightAnchor constraintEqualToConstant:ceil(textSize.height)]
+    ]];
 }
 
 @end
