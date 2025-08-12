@@ -14,5 +14,5 @@ s.source       = { :git => "https://github.com/boboxiaodd/Mp3Recorder.git", :tag
 s.source_files = 'MXMp3Recorder/*.{h,m}','BBVoiceRecord/*.{h,m}'
 s.vendored_frameworks = 'MXMp3Recorder/lame.framework'
 s.requires_arc = true
-s.dependency 'Masonry'
+#s.dependency 'Masonry'
 end
