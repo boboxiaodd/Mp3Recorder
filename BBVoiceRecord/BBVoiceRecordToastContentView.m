@@ -54,7 +54,7 @@
     if (_lbContent == nil) {
         _lbContent = [[UILabel alloc] initWithFrame:self.bounds];
         _lbContent.backgroundColor = [UIColor clearColor];
-        _lbContent.text = @"上滑取消";
+        _lbContent.text = NSLocalizedString(@"上滑取消",@"");
         _lbContent.textColor = [UIColor whiteColor];
         _lbContent.textAlignment = NSTextAlignmentCenter;
         _lbContent.font = [UIFont systemFontOfSize:14];
@@ -191,7 +191,7 @@
     if (_lbContent == nil) {
         _lbContent = [[UILabel alloc] initWithFrame:self.bounds];
 //        _lbContent.backgroundColor = [UIColor colorWithHex:0xA52E2C];
-        _lbContent.text = @"松开取消";
+        _lbContent.text = NSLocalizedString(@"松开取消",@"");
         _lbContent.textColor = [UIColor whiteColor];
         _lbContent.textAlignment = NSTextAlignmentCenter;
         _lbContent.font = [UIFont boldSystemFontOfSize:14];
@@ -276,7 +276,7 @@
     if (_lbContent == nil) {
         _lbContent = [[UILabel alloc] initWithFrame:self.bounds];
         _lbContent.backgroundColor = [UIColor colorWithHex:0xA52E2C];
-        _lbContent.text = @"上滑取消";
+        _lbContent.text = NSLocalizedString(@"上滑取消",@"");
         _lbContent.textColor = [UIColor whiteColor];
         _lbContent.textAlignment = NSTextAlignmentCenter;
         _lbContent.font = [UIFont boldSystemFontOfSize:14];
@@ -370,7 +370,7 @@
         _lbContent.textColor = [UIColor whiteColor];
         _lbContent.textAlignment = NSTextAlignmentCenter;
         _lbContent.font = [UIFont systemFontOfSize:14];
-        _lbContent.text = @"时间太短";
+        _lbContent.text = NSLocalizedString(@"时间太短",@"");
         [self addSubview:_lbContent];
     }
     if (_imgIcon == nil) {
